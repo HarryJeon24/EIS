@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EIS – Emory International Student Forum • Sign Up</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="../public/favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="../public/favicon.png" sizes="32x32" />
+  <meta name="theme-color" content="#002878" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/auth.css" />
+</head>
+<body>
+  <main class="auth-layout">
+    <!-- Brand / Hero side -->
+    <section class="brand-pane" aria-label="EIS brand area">
+      <div class="brand-overlay">
+        <div class="brand-lockup">
+          <img
+            src="../public/favicon.svg"
+            alt="EIS chevron logo"
+            class="brand-logo"
+            width="72"
+            height="72"
+            decoding="async"
+            loading="eager"
+          />
+          <h1>EIS</h1>
+          <p class="tagline">Emory International Student Forum</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Form side -->
+    <section class="form-pane">
+      <div class="card" role="dialog" aria-labelledby="signup-title" aria-describedby="signup-desc">
+        <!-- STEP 1: Account form -->
+        <div id="stepCreate">
+          <h2 id="signup-title">Create your account</h2>
+          <p id="signup-desc" class="muted">Use your Emory email to sign up.</p>
+
+          <form id="signupForm" novalidate>
+            <div class="field">
+              <label for="name">Full Name</label>
+              <input id="name" name="name" type="text" autocomplete="name" placeholder="Your name" required />
+            </div>
+
+            <div class="field">
+              <label for="email">Emory Email</label>
+              <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="netid@emory.edu" required />
+              <small class="hint">Only <strong>@emory.edu</strong> emails are allowed.</small>
+            </div>
+
+            <div class="field">
+              <label for="password">Password</label>
+              <div class="password-wrap">
+                <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" placeholder="••••••••" required />
+                <button type="button" class="ghost" id="togglePwd" aria-controls="password" aria-label="Show password">Show</button>
+              </div>
+              <small class="hint">At least 8 characters.</small>
+            </div>
+
+            <div class="field">
+              <label for="confirm">Confirm Password</label>
+              <input id="confirm" name="confirm" type="password" autocomplete="new-password" minlength="8" placeholder="••••••••" required />
+            </div>
+
+            <div class="row">
+              <div class="field" style="flex:1;">
+                <label for="role">Role</label>
+                <select id="role" name="role" required>
+                  <option value="">Select role…</option>
+                  <option>Undergraduate</option>
+                  <option>Graduate</option>
+                  <option>PhD</option>
+                  <option>Exchange</option>
+                  <option>Visiting Scholar</option>
+                  <option>Staff</option>
+                </select>
+              </div>
+              <div class="field" style="flex:1;">
+                <label for="classYear">Class Year (optional)</label>
+                <input id="classYear" name="classYear" type="number" min="2020" max="2035" placeholder="2027" />
+              </div>
+            </div>
+
+            <label class="checkbox">
+              <input type="checkbox" id="agree" required />
+              <span>I agree to the Community Rules and Privacy Policy.</span>
+            </label>
+
+            <button class="primary" type="submit" id="signupBtn">Create account</button>
+
+            <p class="alt">Already have an account? <a class="link" href="./login.html">Log in</a></p>
+
+            <div id="formMessage" class="form-message" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+
+        <!-- STEP 2: Email verification -->
+        <div id="stepVerify" style="display:none;">
+          <h2>Verify your email</h2>
+          <p class="muted">
+            We sent a 6-digit verification code to <strong id="verifyEmailLabel"></strong>.<br/>
+            Enter it below to activate your account.
+          </p>
+
+          <form id="verifyForm" novalidate>
+            <div class="field">
+              <label for="code">Verification Code</label>
+              <input id="code" name="code" type="text" inputmode="numeric" placeholder="123456" minlength="6" maxlength="6" required />
+              <small class="hint" id="demoHint" aria-live="polite"></small>
+            </div>
+
+            <div class="row between">
+              <button class="ghost" type="button" id="resendBtn">Resend code</button>
+              <button class="primary" type="submit" id="verifyBtn">Verify</button>
+            </div>
+
+            <p class="alt">Wrong email? <a class="link" href="#" id="changeEmail">Go back</a></p>
+
+            <div id="verifyMessage" class="form-message" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+
+      <p class="credit">Unofficial student project. Not affiliated with Emory University.</p>
+    </section>
+  </main>
+
+  <script type="module" src="../js/validators.js"></script>
+  <script type="module" src="../js/signup.js"></script>
+</body>
+</html>
