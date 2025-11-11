@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EIS • Pending Verification</title>
+
+  <link rel="icon" href="../public/favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#002878" />
+  <link rel="stylesheet" href="../css/auth.css" />
+</head>
+<body>
+  <main class="auth-layout">
+    <section class="brand-pane" aria-label="EIS brand area">
+      <div class="brand-overlay">
+        <div class="brand-lockup">
+          <img src="../public/favicon.svg" alt="EIS chevron logo" class="brand-logo" width="72" height="72" />
+          <h1>EIS</h1>
+          <p class="tagline">Emory International Student Forum</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="form-pane">
+      <div class="card" role="dialog" aria-labelledby="pend-title" aria-describedby="pend-desc">
+        <h2 id="pend-title">Check your inbox</h2>
+        <p id="pend-desc" class="muted">
+          We’ve sent a verification email to <strong id="emailLabel"></strong>.<br/>
+          This demo will auto-advance after a few seconds.
+        </p>
+
+        <div class="row between">
+          <button class="ghost" id="resendBtn" type="button">Resend verification email</button>
+          <a class="link" href="./login.html">Back to Log in</a>
+        </div>
+
+        <div id="pendMessage" class="form-message" role="status" aria-live="polite"></div>
+      </div>
+      <p class="credit">Unofficial student project. Not affiliated with Emory University.</p>
+    </section>
+  </main>
+
+  <script type="module" src="../js/pending.js"></script>
+</body>
+</html>

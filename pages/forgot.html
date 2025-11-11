@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EIS – Forgot Password</title>
+
+  <link rel="icon" href="../public/favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#002878" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/auth.css" />
+</head>
+<body>
+  <main class="auth-layout">
+    <!-- Brand side -->
+    <section class="brand-pane" aria-label="EIS brand area">
+      <div class="brand-overlay">
+        <div class="brand-lockup">
+          <img
+            src="../public/favicon.svg"
+            alt="EIS chevron logo"
+            class="brand-logo"
+            width="72" height="72"
+            decoding="async" loading="eager"
+          />
+          <h1>EIS</h1>
+          <p class="tagline">Emory International Student Forum</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Form side -->
+    <section class="form-pane">
+      <div class="card" role="dialog" aria-labelledby="fp-title" aria-describedby="fp-desc">
+        <h2 id="fp-title">Forgot your password?</h2>
+        <p id="fp-desc" class="muted">
+          Enter your Emory email and we’ll send you a reset link. (Demo only—no real email is sent.)
+        </p>
+
+        <form id="forgotForm" novalidate>
+          <div class="field">
+            <label for="email">Emory Email (or <em>admin</em> for demo)</label>
+            <input
+              id="email" name="email" type="email" inputmode="email" autocomplete="email"
+              placeholder="netid@emory.edu or admin" required
+            />
+            <small class="hint">Demo: you can also enter <strong>admin</strong>.</small>
+          </div>
+
+          <div class="row between">
+            <a class="link" href="./login.html">Back to Log in</a>
+            <button class="primary" type="submit" id="sendBtn">Send reset link</button>
+          </div>
+
+          <div id="formMessage" class="form-message" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+
+      <p class="credit">Unofficial student project. Not affiliated with Emory University.</p>
+    </section>
+  </main>
+
+  <script type="module" src="../js/validators.js"></script>
+  <script type="module" src="../js/forgot.js"></script>
+</body>
+</html>

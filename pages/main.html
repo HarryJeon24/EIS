@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EIS – Main Feed</title>
+
+  <link rel="icon" href="../public/favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#002878" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- auth.css gives us colors + base look -->
+  <link rel="stylesheet" href="../css/auth.css" />
+  <!-- main.css is only for layout of the feed -->
+  <link rel="stylesheet" href="../css/main.css" />
+</head>
+<body class="eis-app">
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <img src="../public/favicon.svg" alt="EIS" class="topbar-logo" />
+      <div>
+        <div class="topbar-title">EIS</div>
+        <div class="topbar-subtitle">Emory International Student Forum</div>
+      </div>
+    </div>
+
+    <div class="topbar-search">
+      <label class="sr-only" for="searchInput">Search</label>
+      <div class="search-box" id="searchBox">
+        <input id="searchInput" type="text" placeholder="Search posts (e.g. “CPT timeline”, “sublet”, “SIM card”)..." autocomplete="off" />
+        <button id="searchBtn" type="button" aria-label="Search">🔍</button>
+        <ul class="search-suggestions" id="searchSuggestions" aria-label="Search suggestions"></ul>
+      </div>
+    </div>
+
+    <div class="topbar-right">
+      <button id="createPostBtn" class="ghost">+ Create Post</button>
+      <div class="user-pill" id="userMenuBtn">
+        <span class="user-avatar">HJ</span>
+        <span class="user-name" id="currentUserName">harry</span>
+      </div>
+      <div class="user-menu" id="userMenu" aria-label="User menu">
+        <a href="#" id="myProfile">My profile (placeholder)</a>
+        <a href="./login.html" id="logoutBtn">Log out</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main layout -->
+  <main class="main-shell">
+    <!-- Left / center column -->
+    <div class="main-content">
+      <!-- Filters -->
+      <section class="filter-bar" aria-label="Feed filters">
+        <div class="filter-pills" id="categoryFilters">
+          <!-- populated by JS -->
+        </div>
+        <div class="sort-controls">
+          <label for="sortSelect">Sort</label>
+          <select id="sortSelect">
+            <option value="top">Top</option>
+            <option value="recent">Most recent</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Guides / pinned -->
+      <section class="guides" aria-label="Pinned resources">
+        <h2>Guides & Pinned</h2>
+        <div class="guides-grid" id="guidesGrid">
+          <!-- populated by JS -->
+        </div>
+      </section>
+
+      <!-- Feed -->
+      <section class="feed" aria-label="Post list">
+        <h2 class="sr-only">Posts</h2>
+        <div id="postsContainer" class="posts">
+          <!-- populated by JS -->
+        </div>
+        <button class="ghost load-more" id="loadMoreBtn" type="button">Load more</button>
+      </section>
+    </div>
+
+    <!-- Right sidebar -->
+    <aside class="sidebar" aria-label="Trending and tools">
+      <section class="trending">
+        <h2>Trending this week</h2>
+        <ul id="trendingList">
+          <!-- populated by JS -->
+        </ul>
+      </section>
+      <section class="safety">
+        <h2>Safety Notice</h2>
+        <p>Be cautious with off-platform housing payments. Check “Housing Safety” in Guides.</p>
+        <button type="button" class="ghost small" id="reportLink">Report a post</button>
+      </section>
+    </aside>
+  </main>
+
+  <!-- Lightweight compose modal (placeholder) -->
+  <div class="modal-backdrop" id="composeModal" aria-hidden="true">
+    <div class="modal">
+      <h2>Create Post</h2>
+      <p class="muted">This is just a front-end placeholder. In the real app, this will submit to the backend.</p>
+      <div class="field">
+        <label for="newTitle">Title</label>
+        <input id="newTitle" type="text" placeholder="e.g. Looking for roommate near campus" />
+      </div>
+      <div class="field">
+        <label for="newCategory">Category</label>
+        <select id="newCategory">
+          <option>Housing</option>
+          <option>Food</option>
+          <option>Visa</option>
+          <option>Jobs</option>
+          <option>Activities/Clubs</option>
+          <option>Courses</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="newBody">Content</label>
+        <textarea id="newBody" rows="4" placeholder="Give details, links, or what you’ve tried."></textarea>
+      </div>
+      <div class="row between">
+        <button id="cancelCompose" class="ghost" type="button">Cancel</button>
+        <button id="saveCompose" class="primary" type="button">Post</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="../js/main.js"></script>
+</body>
+</html>

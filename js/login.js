@@ -1,5 +1,3 @@
-// pages/login.html -> ../js/login.js
-// Uses shared validators
 import { isEmoryEmail } from './validators.js';
 
 const form = document.getElementById('loginForm');
@@ -18,11 +16,10 @@ togglePwd.addEventListener('click', () => {
   const showing = pwdInput.type === 'text';
   pwdInput.type = showing ? 'password' : 'text';
   togglePwd.textContent = showing ? 'Show' : 'Hide';
-  togglePwd.setAttribute('aria-label', showing ? 'Show password' : 'Hide password');
   pwdInput.focus();
 });
 
-// Prefill from "remember me"
+// Prefill if remembered
 (function prefill() {
   const saved = localStorage.getItem('emoryRemember');
   if (saved) {
@@ -36,11 +33,19 @@ form.addEventListener('submit', async (e) => {
   e.preventDefault();
   setMessage('', '');
 
-  const email = emailInput.value.trim();
+  const email = emailInput.value.trim().toLowerCase();
   const password = pwdInput.value;
 
+  // DEMO BYPASS: admin/admin
+  if (email === 'admin' && password === 'admin') {
+    setMessage('success', 'Welcome admin! Redirecting…');
+    setTimeout(() => (window.location.href = './main.html'), 400);
+    return;
+  }
+
+  // Normal validation path
   if (!isEmoryEmail(email)) {
-    setMessage('error', 'Please use a valid Emory email ending in @emory.edu.');
+    setMessage('error', 'Please use a valid Emory email ending in @emory.edu (or use admin/admin for demo).');
     emailInput.focus();
     return;
   }
@@ -54,22 +59,14 @@ form.addEventListener('submit', async (e) => {
   loginBtn.textContent = 'Signing in…';
 
   try {
-    // Real backend call would be added.
-
-    await new Promise((r) => setTimeout(r, 800));
-
+    await new Promise((r) => setTimeout(r, 700));
     setMessage('success', 'Success! Redirecting…');
 
-    // Remember preference
     const remember = document.getElementById('remember')?.checked;
-    if (remember) {
-      localStorage.setItem('emoryRemember', email);
-    } else {
-      localStorage.removeItem('emoryRemember');
-    }
+    if (remember) localStorage.setItem('emoryRemember', email);
+    else localStorage.removeItem('emoryRemember');
 
-    // Redirect into the app (adjust as needed)
-    window.location.href = '../pages/feed.html';
+    window.location.href = './main.html';
   } catch (err) {
     console.error(err);
     setMessage('error', 'Something went wrong. Please try again.');

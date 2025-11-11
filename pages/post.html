@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EIS – Post</title>
+
+  <link rel="icon" href="../public/favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#002878" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- reuse base theme + main layout styles -->
+  <link rel="stylesheet" href="../css/auth.css" />
+  <link rel="stylesheet" href="../css/main.css" />
+  <style>
+    /* minimal extras for the post detail layout */
+    .post-page {
+      max-width: 900px;
+      margin: 16px auto;
+      padding: 0 16px;
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1fr;
+    }
+    .post-hero {
+      background: #fff;
+      border: 1px solid #eceef1;
+      border-radius: 14px;
+      padding: 16px 18px;
+    }
+    .post-hero h1 { margin: 0 0 8px; line-height: 1.3; }
+    .post-hero .post-meta { margin-top: 6px; }
+    .post-body {
+      white-space: pre-wrap;
+      line-height: 1.6;
+      font-size: 0.95rem;
+      color: #26282b;
+      margin-top: 10px;
+    }
+    .post-toolbar {
+      display: flex; gap: 10px; align-items: center; margin-top: 10px;
+    }
+
+    .comments-card {
+      background: #fff;
+      border: 1px solid #eceef1;
+      border-radius: 14px;
+      padding: 12px 14px 16px;
+    }
+    .comments-header {
+      display: flex; align-items: baseline; justify-content: space-between;
+    }
+    .comment {
+      border-top: 1px solid #f0f2f6; padding-top: 10px; margin-top: 10px;
+    }
+    .comment .meta { font-size: .75rem; color: #777; margin-bottom: 6px; }
+    .comment .text { font-size: .9rem; }
+
+    .comment-form {
+      margin-top: 12px;
+      background: #f8fafc;
+      border: 1px solid #ecedf0;
+      border-radius: 10px;
+      padding: 10px;
+    }
+    .comment-form textarea {
+      width: 100%; border: 1px solid #ccd1d6; border-radius: 10px; padding: 10px;
+      min-height: 90px; resize: vertical; outline: none;
+    }
+    .comment-form .row { justify-content: flex-end; margin-top: 8px; }
+  </style>
+</head>
+<body class="eis-app">
+  <!-- Top bar (simplified reuse of main) -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <a href="./main.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit">
+        <img src="../public/favicon.svg" alt="EIS" class="topbar-logo" />
+        <div>
+          <div class="topbar-title">EIS</div>
+          <div class="topbar-subtitle">Emory International Student Forum</div>
+        </div>
+      </a>
+    </div>
+    <div class="topbar-right">
+      <a class="ghost" href="./main.html">← Back to feed</a>
+    </div>
+  </header>
+
+  <main class="post-page">
+    <!-- Post -->
+    <article class="post-hero" id="postHero" aria-live="polite">
+      <!-- filled by JS -->
+    </article>
+
+    <!-- Comments -->
+    <section class="comments-card" aria-label="Comments">
+      <div class="comments-header">
+        <h2 style="margin:0;font-size:1rem;">Comments</h2>
+        <span id="commentCount" class="muted">0</span>
+      </div>
+
+      <div id="commentsList">
+        <!-- filled by JS -->
+      </div>
+
+      <form id="commentForm" class="comment-form">
+        <label for="commentText" class="sr-only">Add a comment</label>
+        <textarea id="commentText" placeholder="Be helpful and kind. Share details that can help others."></textarea>
+        <div class="row">
+          <button class="ghost" type="button" id="cancelComment" style="margin-right:auto;">Cancel</button>
+          <button class="primary" type="submit" id="submitComment">Submit</button>
+        </div>
+        <div id="commentMsg" class="form-message" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+  </main>
+
+  <script type="module" src="../js/post.js"></script>
+</body>
+</html>

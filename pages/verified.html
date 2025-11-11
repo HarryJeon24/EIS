@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EIS • Verified</title>
+
+  <link rel="icon" href="../public/favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#002878" />
+  <link rel="stylesheet" href="../css/auth.css" />
+</head>
+<body>
+  <main class="auth-layout">
+    <section class="brand-pane" aria-label="EIS brand area">
+      <div class="brand-overlay">
+        <div class="brand-lockup">
+          <img src="../public/favicon.svg" alt="EIS chevron logo" class="brand-logo" width="72" height="72" />
+          <h1>EIS</h1>
+          <p class="tagline">Emory International Student Forum</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="form-pane">
+      <div class="card" role="dialog" aria-labelledby="ver-title" aria-describedby="ver-desc">
+        <h2 id="ver-title">Email verified!</h2>
+        <p id="ver-desc" class="muted">
+          Your account is good to go. Redirecting to Main…
+        </p>
+        <div class="row between">
+          <a class="link" href="./main.html">Go to Main</a>
+          <a class="link" href="./login.html">Back to Log in</a>
+        </div>
+        <div id="verMessage" class="form-message" role="status" aria-live="polite"></div>
+      </div>
+      <p class="credit">Unofficial student project. Not affiliated with Emory University.</p>
+    </section>
+  </main>
+
+  <script type="module" src="../js/verified.js"></script>
+</body>
+</html>
