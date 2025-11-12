@@ -71,6 +71,41 @@
     }
     .comment-form .row { justify-content: flex-end; margin-top: 8px; }
   </style>
+
+  <style>
+    .vote, .vote-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .9rem;
+      user-select: none;
+    }
+    .vote button, .vote-inline button {
+      border: 1px solid #e5e7eb;
+      background: #fff;
+      border-radius: 8px;
+      padding: 4px 8px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .vote .count, .vote-inline .count {
+      min-width: 24px;
+      text-align: center;
+      font-weight: 600;
+      color: #1f2937;
+    }
+    .vote button.active, .vote-inline button.active {
+      border-color: #1d4ed8;
+      box-shadow: 0 0 0 2px rgba(29,78,216,.1);
+    }
+    /* gentle placement helpers that won't break existing layout */
+    .post-vote-row {
+      display: flex; align-items: center; justify-content: flex-end;
+      margin-top: 8px;
+    }
+    .comment .vote-inline { margin-top: 6px; }
+  </style>
+
 </head>
 <body class="eis-app">
   <!-- Top bar (simplified reuse of main) -->
@@ -117,6 +152,77 @@
       </form>
     </section>
   </main>
+
+  
+  <script type="module">
+    (function () {
+      // small utility to read post id from querystring (?id=5)
+      const url = new URL(window.location.href);
+      const postId = url.searchParams.get('id') || 'demo';
+
+      function getCount(key) { return parseInt(localStorage.getItem(key) || '0', 10); }
+      function setCount(key, val) { localStorage.setItem(key, String(val)); }
+      function getVote(key) { return parseInt(localStorage.getItem(key + ':user') || '0', 10); }
+      function setVote(key, val) { localStorage.setItem(key + ':user', String(val)); }
+
+      function makeVoteEl(storageKey) {
+        const container = document.createElement('div');
+        container.className = 'vote-inline';
+        container.innerHTML = `
+          <button aria-label="Upvote" class="up">▲</button>
+          <span class="count" aria-live="polite">0</span>
+          <button aria-label="Downvote" class="down">▼</button>
+        `;
+        const up = container.querySelector('.up');
+        const down = container.querySelector('.down');
+        const countEl = container.querySelector('.count');
+
+        function sync() {
+          const c = getCount(storageKey);
+          const v = getVote(storageKey);
+          countEl.textContent = c;
+          up.classList.toggle('active', v === 1);
+          down.classList.toggle('active', v === -1);
+        }
+
+        function apply(newVote) {
+          const prevVote = getVote(storageKey);
+          if (newVote === prevVote) newVote = 0; // toggle off
+          const delta = newVote - prevVote; // -1, 0, or +1
+          setVote(storageKey, newVote);
+          setCount(storageKey, getCount(storageKey) + delta);
+          sync();
+        }
+
+        up.addEventListener('click', () => apply(1));
+        down.addEventListener('click', () => apply(-1));
+        sync();
+        return container;
+      }
+
+      // Attach to the post header/card
+      const postCard = document.querySelector('.post-card');
+      if (postCard) {
+        const row = document.createElement('div');
+        row.className = 'post-vote-row';
+        row.appendChild(makeVoteEl(`post:${postId}:main`));
+        postCard.appendChild(row);
+      }
+
+      // Attach to each comment
+      const comments = document.querySelectorAll('.comment');
+      comments.forEach((el, i) => {
+        const widget = makeVoteEl(`post:${postId}:comment:${i}`);
+        // Place after the text, or at the end if not found
+        const text = el.querySelector('.text');
+        if (text) {
+          text.insertAdjacentElement('afterend', widget);
+        } else {
+          el.appendChild(widget);
+        }
+      });
+    })();
+  </script>
 
   <script type="module" src="../js/post.js"></script>
 </body>

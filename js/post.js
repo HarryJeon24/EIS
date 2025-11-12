@@ -25,6 +25,66 @@ Any recommendations + tips appreciated! Also if there's a grocery for halal meat
   // (optional) you can add more post bodies later using their IDs from the feed
 };
 
+
+// --- voting helpers (persisted in localStorage) ---
+(function ensureVoteStyles(){
+  if (document.getElementById('eis-vote-style')) return;
+  const s = document.createElement('style');
+  s.id = 'eis-vote-style';
+  s.textContent = `
+    .vote-inline{display:inline-flex;align-items:center;gap:8px;font-size:.9rem;user-select:none}
+    .vote-inline button{border:1px solid #e5e7eb;background:#fff;border-radius:8px;padding:4px 8px;line-height:1;cursor:pointer}
+    .vote-inline .count{min-width:24px;text-align:center;font-weight:600;color:#1f2937}
+    .vote-inline button.active{border-color:#1d4ed8;box-shadow:0 0 0 2px rgba(29,78,216,.1)}
+    .post-vote-row{display:flex;align-items:center;justify-content:flex-end;margin-top:8px}
+  `;
+  document.head.appendChild(s);
+})();
+
+function voteKey(key){ return `eis_demo:vote:${key}`; }
+function userKey(key){ return `eis_demo:vote:${key}:user`; }
+function getCount(key){ return parseInt(localStorage.getItem(voteKey(key)) || '0', 10); }
+function setCount(key, val){ localStorage.setItem(voteKey(key), String(val)); }
+function getUserVote(key){ return parseInt(localStorage.getItem(userKey(key)) || '0', 10); } // -1,0,1
+function setUserVote(key, val){ localStorage.setItem(userKey(key), String(val)); }
+
+function voteWidgetHTML(key){
+  const count = getCount(key);
+  const user = getUserVote(key);
+  return `
+    <span class="vote-inline" data-votekey="${key}">
+      <button type="button" class="up ${user===1?'active':''}" aria-label="Upvote">▲</button>
+      <span class="count" aria-live="polite">${count}</span>
+      <button type="button" class="down ${user===-1?'active':''}" aria-label="Downvote">▼</button>
+    </span>
+  `;
+}
+
+// Event delegation for all vote widgets
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.vote-inline .up, .vote-inline .down');
+  if (!btn) return;
+  const wrap = btn.closest('.vote-inline');
+  const key = wrap?.getAttribute('data-votekey');
+  if (!key) return;
+
+  const dir = btn.classList.contains('up') ? 1 : -1; // intended new vote
+  const prev = getUserVote(key);
+  let next = dir;
+  if (prev === dir) next = 0; // toggle off
+
+  const delta = next - prev; // -1,0,+1
+  setUserVote(key, next);
+  setCount(key, getCount(key) + delta);
+
+  // refresh UI
+  const countEl = wrap.querySelector('.count');
+  countEl.textContent = getCount(key);
+  wrap.querySelector('.up').classList.toggle('active', next === 1);
+  wrap.querySelector('.down').classList.toggle('active', next === -1);
+});
+
+
 // --- helpers ---
 const qs = new URLSearchParams(location.search);
 const postId = Number(qs.get('id') || '5'); // default to halal post if no id
@@ -76,6 +136,7 @@ function init() {
       <span>${escapeHtml(post.timeAgo)}</span>
     </div>
     <div class="post-body">${mdToHtml(post.body)}</div>
+    <div class="post-vote-row">${voteWidgetHTML(`post:${postId}`)}</div>
     <div class="post-toolbar">
       <button type="button" class="ghost small" id="reportBtn">Report</button>
       <button type="button" class="ghost small" id="shareBtn">Share</button>
@@ -135,16 +196,16 @@ function renderComments() {
     .sort((a, b) => b.ts - a.ts);
 
   commentCount.textContent = `${comments.length}`;
-  commentsList.innerHTML = comments.map(renderComment).join('') || `
+  commentsList.innerHTML = comments.map((c,i)=>renderComment(c,i)).join('') || `
     <div class="muted" style="margin-top:8px;">No comments yet. Be the first to help!</div>
   `;
 }
 
-function renderComment(c) {
+function renderComment(c, i) {
   return `
     <div class="comment">
       <div class="meta">by ${escapeHtml(c.user)} • ${timeAgo(c.ts)}</div>
-      <div class="text">${escapeHtml(c.text)}</div>
+      <div class="text">${escapeHtml(c.text)}</div>\n      ${voteWidgetHTML(`comment:${postId}:${i}`)}
     </div>
   `;
 }
