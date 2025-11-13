@@ -17,12 +17,6 @@ Opening with `file://` paths will cause certain features (JavaScript modules, AJ
 2. Right‑click the main HTML file and select **"Open in Browser" → Chrome (or your preferred browser)**.
 3. PyCharm will serve the file via `http://localhost:63342/...`, ensuring all features work properly.
 
-### Option 2: Using Python (built‑in server)
-1. Navigate to the project folder in your terminal.
-2. Run:
-   ```bash
-   python -m http.server 8000
-
 
 emory-international/
 ├─ public/
