@@ -133,5 +133,21 @@
   </div>
 
   <script type="module" src="../js/main.js"></script>
+  <script type="module">
+    // Override any modal handler bound in main.js for #createPostBtn
+    (function () {
+      const btn = document.getElementById('createPostBtn');
+      if (!btn) return;
+      // Remove any existing listeners by replacing the node (keeps attributes/classes)
+      const clone = btn.cloneNode(true);
+      btn.parentNode.replaceChild(clone, btn);
+      // Navigate to the standalone create page
+      clone.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = './create_post.html';
+      });
+    })();
+  </script>
+
 </body>
 </html>
