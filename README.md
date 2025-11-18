@@ -14,24 +14,9 @@ Opening with `file://` paths will cause certain features (JavaScript modules, AJ
 
 ### Option 1: Using PyCharm
 1. Open the project in PyCharm.
-2. Right‑click the main HTML file and select **"Open in Browser" → Chrome (or your preferred browser)**.
-3. PyCharm will serve the file via `http://localhost:63342/...`, ensuring all features work properly.
+2. Right‑click the login.html file and select **"Run "login.html**.
+   <img width="1067" height="962" alt="image" src="https://github.com/user-attachments/assets/9936c82f-e151-4e8c-a233-9fc7a2166c7d" />
 
+4. PyCharm will serve the file via `http://localhost:63342/...`, ensuring all features work properly.
 
-emory-international/
-├─ public/
-│  └─ favicon.svg
-├─ assets/
-│  └─ images/            # (optional) logos, screenshots, etc.
-├─ css/
-│  ├─ base.css           # (optional) resets/global tokens later
-│  └─ auth.css           # shared styles for login & signup (formerly login.css)
-├─ js/
-│  ├─ validators.js      # shared email/password checks
-│  ├─ login.js
-│  └─ signup.js
-├─ pages/
-│  ├─ login.html
-│  └─ signup.html
-└─ README.md
 
